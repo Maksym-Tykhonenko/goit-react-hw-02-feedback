@@ -1,4 +1,12 @@
-import { Component } from "react"
+import { Component } from "react";
+import {
+    FeedbackBlock,
+    Title,
+    BtnBlock,
+    Btn,
+    StatList,
+    StatItem
+} from './Feedback.styled';
 
 
 
@@ -33,25 +41,25 @@ export class Feedback extends Component {
 
     render() {
             return(
-        <div>
-            <div >
-                <p>Please leave feedback</p>
-                <button type="button" onClick={this.handlClickGood}>Good</button>
-                <button type="button" onClick={this.handlClickNeutral}>Neutral</button>
-                <button type="button" onClick={this.handlClickBad}>Bad</button>
-            </div>
+        <FeedbackBlock>
+                <Title>Please leave feedback</Title>
+            <BtnBlock >
+                <Btn type="button" onClick={this.handlClickGood}>Good</Btn>
+                <Btn type="button" onClick={this.handlClickNeutral}>Neutral</Btn>
+                <Btn type="button" onClick={this.handlClickBad}>Bad</Btn>
+            </BtnBlock>
             {this.countTotalFeedback() > 0 && (<div>
-                <p>Statistics</p>
-                <ul>
-                    <li>Good: {this.state.good}</li>
-                    <li>Neutral: {this.state.neutral}</li>
-                    <li>Bad: {this.state.bad}</li>
-                    <li>Total: {this.countTotalFeedback()}</li>
-                    <li>Positive feedback: {this.countPositiveFeedbackPercentage()}%</li>
-                </ul>
+                <Title>Statistics</Title>
+                <StatList>
+                    <StatItem>Good: {this.state.good}</StatItem>
+                    <StatItem>Neutral: {this.state.neutral}</StatItem>
+                    <StatItem>Bad: {this.state.bad}</StatItem>
+                    <StatItem>Total: {this.countTotalFeedback()}</StatItem>
+                    <StatItem>Positive feedback: {this.countPositiveFeedbackPercentage()}%</StatItem>
+                </StatList>
             </div>)}
             
-       </div>
+       </FeedbackBlock>
    )
     }
 

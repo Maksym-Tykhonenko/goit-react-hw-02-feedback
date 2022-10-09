@@ -1,14 +1,12 @@
 import { Component } from "react";
+import { Notification } from '../Notification/Notification';
+import { Statistics } from '../Statistics/Statistics';
+import {FeedbackOptions} from '../FeedbackOptions/FeedbackOptions';
+
 import {
     FeedbackBlock,
-    Title,
-    BtnBlock,
-    Btn,
-    StatList,
-    StatItem
+    Title
 } from './Feedback.styled';
-
-
 
 export class Feedback extends Component {
     state = {
@@ -16,6 +14,7 @@ export class Feedback extends Component {
         neutral: 0,
         bad: 0,
     }
+ 
     countTotalFeedback() {
         return this.state.good + this.state.neutral + this.state.bad
     };
@@ -23,43 +22,32 @@ export class Feedback extends Component {
         return Number.parseInt((this.state.good / this.countTotalFeedback() ) * 100)
     };
 
-    handlClickGood = () => {
+    onLeaveFeedback = (option) => {
         this.setState(prevState => ({
-                good: prevState.good + 1,
+            [option]: prevState[option] +1,
         }))
-    };
-    handlClickNeutral = () => {
-        this.setState(prevState => ({
-                neutral: prevState.neutral + 1,
-        }))
-    };
-    handlClickBad = () => {
-        this.setState(prevState => ({
-                bad: prevState.bad + 1,
-        }))
-    };
+    }
 
     render() {
-            return(
+        const { good, neutral, bad } = this.state;
+        const total = this.countTotalFeedback();
+        const positivePercentage = this.countPositiveFeedbackPercentage();
+        const options = Object.keys(this.state);
+
+        return(
         <FeedbackBlock>
-                <Title>Please leave feedback</Title>
-            <BtnBlock >
-                <Btn type="button" onClick={this.handlClickGood}>Good</Btn>
-                <Btn type="button" onClick={this.handlClickNeutral}>Neutral</Btn>
-                <Btn type="button" onClick={this.handlClickBad}>Bad</Btn>
-            </BtnBlock>
-            {this.countTotalFeedback() > 0 && (<div>
-                <Title>Statistics</Title>
-                <StatList>
-                    <StatItem>Good: {this.state.good}</StatItem>
-                    <StatItem>Neutral: {this.state.neutral}</StatItem>
-                    <StatItem>Bad: {this.state.bad}</StatItem>
-                    <StatItem>Total: {this.countTotalFeedback()}</StatItem>
-                    <StatItem>Positive feedback: {this.countPositiveFeedbackPercentage()}%</StatItem>
-                </StatList>
-            </div>)}
-            
-       </FeedbackBlock>
+           <Title>Please leave feedback</Title>
+           <FeedbackOptions options={options} onLeaveFeedback={this.onLeaveFeedback}/>
+            {total > 0 ? (
+                <Statistics 
+                    good={good} 
+                    neutral={neutral} 
+                    bad={bad} 
+                    total={total} 
+                    positivePercentage={positivePercentage}/>
+                ) : (
+                <Notification message="There is no feedback" />)} 
+        </FeedbackBlock>
    )
     }
 

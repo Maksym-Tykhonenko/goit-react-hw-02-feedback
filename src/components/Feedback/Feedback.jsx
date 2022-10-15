@@ -4,7 +4,7 @@ import { Statistics } from '../Statistics/Statistics';
 import {FeedbackOptions} from '../FeedbackOptions/FeedbackOptions';
 
 import {
-    FeedbackBlock,
+    Section,
     Title
 } from './Feedback.styled';
 
@@ -35,7 +35,7 @@ export class Feedback extends Component {
         const options = Object.keys(this.state);
 
         return(
-        <FeedbackBlock>
+        <Section>
            <Title>Please leave feedback</Title>
            <FeedbackOptions options={options} onLeaveFeedback={this.onLeaveFeedback}/>
             {total > 0 ? (
@@ -47,7 +47,7 @@ export class Feedback extends Component {
                     positivePercentage={positivePercentage}/>
                 ) : (
                 <Notification message="There is no feedback" />)} 
-        </FeedbackBlock>
+        </Section>
    )
     }
 
